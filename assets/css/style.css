@@ -1,0 +1,542 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+
+* {
+    margin:0;
+    padding:0;
+    font-family: 'Quicksand', sans-serif;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none ;
+}
+
+.float-left {
+    float:left;
+}
+
+.container {
+    width: 1140px;
+    margin:0 auto;
+}
+
+.container::after {
+    content: "";
+    display : block;
+    clear : both;
+}
+
+.bg-light {
+    background-color: #fefefe;
+}
+
+.clearfix {
+    clear:both;
+}
+
+.page-login {
+    width: 100%;
+    height: 100vh;
+    background-color: #FCB5AC ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    border:1px solid #ddd;
+    background-color: #ffffff;
+}
+
+.box-header {
+    padding:16px;
+    border-bottom: 1px solid #ddd ;
+    background-color: #D9A1A0;
+}
+
+.box-body {
+    padding:16px;
+}
+
+.box-footer {
+    border-top: 1px solid #ddd;
+    background-color: #D9A1A0;
+    padding:16px;
+}
+
+form {
+    margin: 16px 0px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.form-group .input-control {
+    padding:10px;
+    width:100%;
+    font-size: 16px ;
+    border: 1px solid #ddd;
+    
+}
+
+.box-login {
+    width:300px;
+}
+
+.btn {
+    border:1px solid rgb(236, 220, 189);
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #F8AFA6 ;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+.btn-blue {  /* digunakan pd button simpan bag tambah pengguna */
+    background-color: #D3B5E5;
+    border:1px solid #D3B5E5;
+}
+
+.btn-blue:hover {
+    background-color: #A58CB3;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.alert {
+    padding : 10px 16px;
+    border: 1px solid;
+}
+
+.alert-error {
+    background-color: #E43D40 ;
+    border: 1px solid #FADCD9;
+    color: #FADCD9;
+}
+
+.alert-success {
+    background-color: #B5EECB ;
+    border:1 px solid 
+    #00735C;
+    color : 
+    #00735C;
+}
+
+.navbar { 
+    height: 60px;
+    width:100%;
+    background-color: #D3B5E5;
+    position: fixed;
+    top: 0;
+    z-index:1000;
+}
+
+.navbar a {
+    color: #fff;
+}
+
+.nav-brand{
+    display: inline-block;
+    padding: 15px 0px;
+    margin-right: 16px ;
+}
+
+.nav-menu{
+    display: flex;
+    list-style: none;
+}
+
+.nav-menu li a{
+    padding: 20px;
+    display: inline-block;
+}
+
+.nav-menu li .dropdown {
+    border:1px solid #ddd;
+    background-color: #fff;
+    list-style: none;
+    position: absolute;
+    display : none;
+}
+
+.nav-menu li:hover {   /* menu ketika di arahkan kursor */
+    background-color: #A58CB3;
+
+}
+
+.nav-menu li .dropdown a {  /* tulisan dropdown ketika diarahkan kursor */
+    color: #5E376D;
+}
+
+.nav-menu li:hover .dropdown li:hover a{   /* dropdown menu ketika di arahkan ke kursor */
+    color : #fff;
+}
+
+.nav-menu li:hover .dropdown {   /* tampilan dropdown yang di hide, tampil saat di arahkan kursor ke menu */
+    display: block;
+}
+
+.content {
+    padding:80px 0 30px 0;
+}
+
+.footer {
+    padding:20px 0;
+}
+
+.table {
+    width:100%;
+    border-collapse: collapse; /* menggabungkan table dari yg sblmnya terpisah */
+    margin: 8px 0;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding:10px;
+}
+
+.table td:first-child{
+    width:50px;
+    text-align: center;
+}
+
+.table td:last-child{
+    width:150px;
+    text-align: center;
+}
+
+.text-red { /* aksi hapus pengguna */
+    color : #E43D40;
+}
+
+.text-orange { /* aksi edit pengguna */
+    color: #F85C70;
+}
+
+.text-green { /* aksi tambah pengguna */
+    color: #94C973;
+}
+
+.input-group:after {   /* pencarian pengguna */
+    content: "";
+    clear:both;
+    display: block;
+}
+
+.input-group input[type="text"] {
+    width: 90%;
+    padding: 10px;
+    font-size: 16px;
+    float: left ;
+    border: 1px solid #ddd;
+}
+
+.input-group input[type="text"]:focus {
+    outline: none ;
+}
+
+.input-group button {
+    width : 10%;
+    padding : 10px;
+    font-size: 16px;
+    float: left;
+    border : 1px solid #ddd;
+    border-left: none;
+}
+
+.image{
+    border: 1px solid #ddd;
+    padding : 5px;
+}
+
+.header {
+    border-bottom : 3px solid #3D5B59;
+}
+
+.header a {
+    color: #333;
+}
+
+.header a:hover {   /*beranda, logo nama sekolah ketika disentuh */
+    color :red;
+}
+
+.header-logo {
+    float : left;
+    line-height: 70px;
+    padding : 5px 0;
+}
+
+.header-logo img {
+    float : left;
+    margin-right: 10px;
+}
+
+.header-logo h2 {
+    float : left;
+}
+
+.header-menu {
+    float : right;
+}
+
+.header-menu li {
+    float : left;
+    list-style: none;
+    padding : 29px 10px;
+}
+
+.banner {
+    border: 1px solid;
+    height: 70vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.banner-text {
+    padding : 25px 0;
+    background-color: rgba(0,0,0, .7);
+    color : #fff;
+    position : absolute;
+    bottom: 0;
+    width : 100%;
+}
+
+.section {
+    padding: 100px 0;
+}
+
+.section h3 {
+    padding-bottom: 25px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.section h3::after {
+    content: "";
+    display: block;
+    width: 60px;
+    border: 3px solid red;
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 30px);
+}
+
+.section h2 {
+    padding-bottom: 25px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.section h2::after {
+    content: "";
+    display: block;
+    width: 60px;
+    border: 3px solid red;
+    position: absolute;
+    bottom: 0;
+    left: calc(50% - 30px);
+}
+
+.section img {
+    margin-bottom: 10px;
+}
+
+.section h4 {
+    margin-bottom: 20px;
+}
+
+.col-4 {
+    min-height : 200px;
+    width : 25%;
+    float : left;
+    padding: 10px;
+}
+
+.col-3 {
+    min-height : 200px;
+    width : 33%;
+    float : left;
+    padding: 6px;
+}
+
+.thumbnail-box {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 100%;
+    min-height: 150px;
+    background-color: #fff;
+}
+
+.thumbnail-img {
+    border-radius: 10px 10px 0 0;
+    height: 150px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.thumbnail-text {
+    border-radius: 0 0 10px 10px;
+    height: 40px;
+    padding: 5px;
+}
+
+.thumbnail-text1 {                          /* beranda, nama kegiatan */
+    height: 40px;
+    padding: 5px;
+    background-color: #D3B5E5;
+}
+
+.thumbnail-text2 {                          /* beranda, alamat kegiatan */
+    border-radius: 0 0 10px 10px;
+    border-top: 1px solid #ccc;
+    height: 50px;
+    padding: 5px;
+}
+
+.thumbnail-link {
+    color : #333;
+}
+
+.thumbnail-link:hover {
+    color: #5E376D;
+}
+
+.tablekelas {
+    width:100%;
+    border-collapse: collapse;                          /* menggabungkan table dari yg sblmnya terpisah */
+    
+}
+
+.tablekelas th{
+    border: 1px solid #ddd;
+    padding:15px;
+}
+
+#kelas {                                                    /*beranda, bagian backgroud kelas*/
+    background-color: #ECE3F0 ;
+}
+
+footer {
+    padding: 50px;
+    background-color: #5E376D ;
+    color : #fff;
+}
+
+.image-center {  /*pembagian kelas, gambar jadi ditengah*/
+    display : block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.box-gmaps {
+    float: left;
+    width: 75%;
+}
+
+.mobile-menu-btn {
+    width:100%;
+    float: left;
+    padding : 10px;
+    display : none;
+}
+
+.box-menu-mobile {
+    display : none;
+    width : 100%;
+    position: fixed;
+    top : 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, .9) ;
+    z-index: 9999;
+}
+
+.box-menu-mobile span {
+    color: #fff;
+    padding : 10px;
+    position : absolute;
+    right : 0;
+}
+
+.box-menu-mobile ul {
+    margin-top : 50px;
+}
+
+.box-menu-mobile ul li a {
+    padding: 10px;
+    display: inline-block;
+    color: #fff;
+}
+
+
+
+/* css mobile */
+
+@media screen and (max-width: 768px){
+
+    .container {
+        width: 100%;
+    }
+
+    .col-3 {
+        width:50%;
+    }
+
+    .col-4 {
+        width: 50%;
+    }
+
+    .thumbnail-text {
+        font-size: 12px;
+    }
+
+    .thumbnail-text1 {
+        font-size: 12px;
+    }
+
+    .thumbnail-text2 {
+        font-size: 12px;
+    }
+
+    .tablekelas {
+        font-size: 12px;
+    }
+
+    .header-logo {
+        line-height: 50px;
+        padding-left: 10px;
+    }
+
+    .header-logo img {
+        width: 50px;
+    }
+
+    .header-logo h2 {
+        font-size: 20px;
+    }
+
+    .header-menu {
+        display :none;
+    }
+
+    .box-gmaps {
+        width: 100%;
+    }
+
+    .mobile-menu-btn{
+        display : block;
+    }
+}

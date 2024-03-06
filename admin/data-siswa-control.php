@@ -1,0 +1,221 @@
+<?php
+
+include('../config/koneksi.php');
+
+function alert($command){
+    echo "<script>alert('".$command."');</script>";
+}
+function redir($command){
+    echo "<script>document.location='".$command."';</script>";
+}
+
+// tambah siswa
+if(isset($_POST['tambahsiswa'])) {
+    
+    // print_r($_POST);
+
+    $nipd = $_POST['nipd'];
+    $nama_siswa = $_POST['nama_siswa'];
+    $username = $_POST['username'];
+    $jk = $_POST['jk'];
+    $nisn = $_POST['nisn'];
+    $tpt_lahir  = addslashes(ucwords( $_POST['tpt_lahir']));
+    $tgl_lahir = date("Y-m-d", strtotime($_POST['tgl_lahir']));
+    $nik_siswa = $_POST['nik_siswa'];
+    $agama = $_POST['agama'];
+    $alamat   = addslashes(ucwords( $_POST['alamat']));
+    $jns_tinggal  = addslashes(ucwords( $_POST['jns_tinggal']));
+    $transportasi  = addslashes(ucwords( $_POST['transportasi']));
+    $rombel = $_POST['rombel'];
+    $no_telp = $_POST['no_telp'];
+    $email = $_POST['email'];
+    $skhun = $_POST['skhun'];
+    $penerima_kps = $_POST['penerima_kps'];
+    $no_kps = $_POST['no_kps'];
+    $nama_ayah  = addslashes(ucwords( $_POST['nama_ayah']));
+    $thn_lahir_ayah = $_POST['thn_lahir_ayah'];
+    $pendidikan_ayah  = addslashes(ucwords( $_POST['pendidikan_ayah']));
+    $pekerjaan_ayah  = addslashes(ucwords( $_POST['pekerjaan_ayah']));
+    $penghasilan_ayah = $_POST['penghasilan_ayah'];
+    $nik_ayah = $_POST['nik_ayah'];
+    $nama_ibu  = addslashes(ucwords( $_POST['nama_ibu']));
+    $thn_lahir_ibu = $_POST['thn_lahir_ibu'];
+    $pendidikan_ibu  = addslashes(ucwords( $_POST['pendidikan_ibu']));
+    $pekerjaan_ibu  = addslashes(ucwords( $_POST['pekerjaan_ibu']));
+    $penghasilan_ibu = $_POST['penghasilan_ibu'];
+    $nik_ibu = $_POST['nik_ibu'];
+    
+    
+    $filename  = $_FILES['foto']['name'];  // tampung file
+    $tmpname  = $_FILES['foto']['tmp_name'];
+    $filesize  = $_FILES['foto']['size'];
+
+    $formatfile = pathinfo($filename, PATHINFO_EXTENSION);
+    $rename     = 'siswa'.time().'.'.$formatfile;
+    $allowedtype = array('png','jpg','jpeg','gif');  //format file foto kegiatan yg dpt diunggah
+
+        if(!in_array($formatfile, $allowedtype)){
+            echo '<div class="alert alert-error">Format File tidak diizinkan.</div>';
+        }elseif($filesize > 1000000){
+            echo '<div class="alert alert-error">Ukuran File tidak boleh lebih dari 1 MB.</div>';
+        }else{
+            move_uploaded_file($tmpname, "../uploads/siswa/".$rename);
+        }
+        // insert tabel user
+        $sql_user = "INSERT INTO user (nama, username, password, level) values('$nama_siswa','$username','202cb962ac59075b964b07152d234b70','siswa')";
+        $result_user = mysqli_query($conn, $sql_user);
+
+        $sql_absensi = "INSERT INTO absensi (nama_siswa) values('$nama_siswa')";
+        $result_absensi = mysqli_query($conn, $sql_absensi);
+
+        $sql_nilai = "INSERT INTO nilai (nama_siswa, nipd, rombel) values('$nama_siswa','$nipd', '$rombel')";
+        $result_nilai = mysqli_query($conn, $sql_nilai);
+
+        //insert table pendaftar
+        $sql_siswa = "INSERT INTO siswa (nipd, nama_siswa, username, jk, nisn,
+        tpt_lahir, tgl_lahir, nik_siswa, agama, alamat, jns_tinggal, transportasi,
+        rombel, no_telp, email, skhun, penerima_kps, no_kps, foto,
+        nama_ayah, thn_lahir_ayah, pendidikan_ayah, pekerjaan_ayah, penghasilan_ayah, nik_ayah, 
+        nama_ibu, thn_lahir_ibu, pendidikan_ibu, pekerjaan_ibu, penghasilan_ibu, nik_ibu)
+        values('$nipd','$nama_siswa','$username', '$jk', '$nisn',
+        '$tpt_lahir','$tgl_lahir','$nik_siswa','$agama','$alamat','$jns_tinggal','$transportasi',
+        '$rombel','$no_telp','$email','$skhun','$penerima_kps', '$no_kps', '$rename',
+        '$nama_ayah','$thn_lahir_ayah','$pendidikan_ayah','$pekerjaan_ayah','$penghasilan_ayah','$nik_ayah',
+        '$nama_ibu','$thn_lahir_ibu','$pendidikan_ibu','$pekerjaan_ibu','$penghasilan_ibu','$nik_ibu')";
+
+        $result_siswa = mysqli_query($conn, $sql_siswa);
+
+        if($result_siswa){
+            alert("Tambah Data Siswa Berhasil.");
+            redir("data-siswa.php");
+        }else{
+            alert("Tambah Data Siswa Gagal.");
+            redir("data-siswa.php");
+        }
+}
+
+// //tabel pendaftar
+// $all_siswa = mysqli_query($conn, "SELECT * FROM siswa");
+
+// //cek hasil
+// if(!$all_siswa) {
+//     die('query error : '. mysqli_error($conn));
+// }
+
+//hapus siswa
+if(isset($_POST['hapussiswa'])) {
+    $idsswa = $_POST['idsiswa'];
+    // $nama = $_POST['nama'];
+
+    $foto = $_POST['foto'];
+
+    $deletefoto = "select foto from siswa where id='$idsswa'";
+
+    if(file_exists("../uploads/siswa/" .$foto)){
+
+        unlink("../uploads/siswa/" .$foto);
+    }
+
+    // $delete_user = "delete from user where nama='$nama'";
+    // $query_delete_user = mysqli_query($conn, $delete_user);
+
+    $delete_siswa = "delete from siswa where id='$idsswa'";
+    $query_delete_siswa = mysqli_query($conn, $delete_siswa);
+
+    // $delete_nilai = "delete from nilai where nama_siswa='$nama_siswa'";
+    // $query_delete_nilai = mysqli_query($conn, $delete_nilai);
+
+    // $delete_absensi = "delete from absensi where nama_siswa='$nama_siswa'";
+    // $query_delete_absensi = mysqli_query($conn, $delete_absensi);
+
+    if($query_delete_siswa) {
+            alert("Hapus Data Siswa Berhasil.");
+            // redir("data-siswa.php");
+    }else{
+            alert("Hapus Data Siswa Gagal.");
+            // redir("data-siswa.php");
+    }
+};
+
+
+
+if(isset($_POST['editsiswa'])){
+
+    $nipd  = addslashes(ucwords( $_POST['nipd']));
+    $nama_siswa  = addslashes(ucwords( $_POST['nama_siswa']));
+    $username  = $_POST['username'];
+    $jk  = addslashes(ucwords( $_POST['jk']));
+    $nisn  = addslashes(ucwords( $_POST['nisn']));
+    $tpt_lahir  = addslashes(ucwords( $_POST['tpt_lahir']));
+    $tgl_lahir  = addslashes(ucwords( $_POST['tgl_lahir']));
+    $nik_siswa  = addslashes(ucwords( $_POST['nik_siswa']));
+    $agama  = addslashes(ucwords( $_POST['agama']));
+    $alamat   = addslashes(ucwords( $_POST['alamat']));  //supaya bisa input nama dengan karakter, mis: (').
+    $jns_tinggal  = addslashes(ucwords( $_POST['jns_tinggal']));
+    $transportasi  = addslashes(ucwords( $_POST['transportasi']));
+    $rombel  = addslashes(ucwords( $_POST['rombel']));
+    $no_telp  = addslashes(ucwords( $_POST['no_telp']));
+    $email  = addslashes(ucwords( $_POST['email']));
+    $skhun  = addslashes(ucwords( $_POST['skhun']));
+    $penerima_kps  = addslashes(ucwords( $_POST['penerima_kps']));
+    $no_kps  = addslashes(ucwords( $_POST['no_kps']));
+    $nama_ayah  = addslashes(ucwords( $_POST['nama_ayah']));
+    $thn_lahir_ayah  = addslashes(ucwords( $_POST['thn_lahir_ayah']));
+    $pendidikan_ayah  = addslashes(ucwords( $_POST['pendidikan_ayah']));
+    $pekerjaan_ayah  = addslashes(ucwords( $_POST['pekerjaan_ayah']));
+    $penghasilan_ayah  = addslashes(ucwords( $_POST['penghasilan_ayah']));
+    $nik_ayah  = addslashes(ucwords( $_POST['nik_ayah']));
+    $nama_ibu  = addslashes(ucwords( $_POST['nama_ibu']));
+    $thn_lahir_ibu  = addslashes(ucwords( $_POST['thn_lahir_ibu']));
+    $pendidikan_ibu  = addslashes(ucwords( $_POST['pendidikan_ibu']));
+    $pekerjaan_ibu  = addslashes(ucwords( $_POST['pekerjaan_ibu']));
+    $penghasilan_ibu  = addslashes(ucwords( $_POST['penghasilan_ibu']));
+    $nik_ibu  = addslashes(ucwords( $_POST['nik_ibu']));
+
+    $idssw = $_POST['idsiswa'];
+
+    if($_FILES['gambar']['name'] != ''){
+        // echo 'user ganti foto';
+        $filename  = $_FILES['gambar']['name'];  // tampung file
+        $tmpname  = $_FILES['gambar']['tmp_name'];
+        $filesize  = $_FILES['gambar']['size'];
+        $formatfile = pathinfo($filename, PATHINFO_EXTENSION);
+        $rename     = 'siswa'.time().'.'.$formatfile;
+
+        $allowedtype = array('png','jpg','jpeg','gif');  //format file foto kegiatan yg dpt diunggah
+        
+        if(!in_array($formatfile, $allowedtype)){
+            echo '<div class="alert alert-error">Format File tidak diizinkan.</div>';
+            return false;
+
+        }elseif($filesize > 1000000){
+            echo '<div class="alert alert-error">Ukuran File tidak boleh lebih dari 1 MB.</div>';
+            return false;
+        }else{
+            if(file_exists("../uploads/siswa/".$_POST['gambar2'])){
+                unlink ("../uploads/siswa/".$_POST['gambar2']);
+            }
+            move_uploaded_file($tmpname, "../uploads/siswa/".$rename);
+        }
+    } else {
+        // echo 'user tidak ganti foto';
+        $rename = $_POST['gambar2'];
+    }
+    $update = "update siswa set nipd='$nipd', nama_siswa='$nama_siswa', username='$username', jk='$jk', nisn='$nisn', tpt_lahir='$tpt_lahir',
+    tgl_lahir='$tgl_lahir', nik_siswa='$nik_siswa', agama='$agama', alamat='$alamat', jns_tinggal='$jns_tinggal', transportasi='$transportasi',
+    rombel='$rombel', no_telp='$no_telp', email='$email', skhun='$skhun', penerima_kps='$penerima_kps', no_kps='$no_kps', foto='$rename',
+    nama_ayah='$nama_ayah', thn_lahir_ayah='$thn_lahir_ayah', pendidikan_ayah='$pendidikan_ayah', pekerjaan_ayah='$pekerjaan_ayah', penghasilan_ayah='$penghasilan_ayah', nik_ayah='$nik_ayah',
+    nama_ibu='$nama_ibu', thn_lahir_ibu='$thn_lahir_ibu', pendidikan_ibu='$pendidikan_ibu', pekerjaan_ibu='$pekerjaan_ibu', penghasilan_ibu='$penghasilan_ibu', nik_ibu='$nik_ibu'
+    where id='$idssw' ";
+    $query_update = mysqli_query($conn, $update);
+
+    if($query_update){
+            alert("Edit Data Siswa Berhasil.");
+            redir("data-siswa.php");
+        }else{
+            alert("Edit Data Siswa Gagal.");
+            redir("data-siswa.php");
+    }
+};
+
+?>
